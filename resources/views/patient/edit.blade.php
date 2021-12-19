@@ -6,7 +6,15 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Edit') }}</div>
-
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="card-body">
                     <form method="POST" action="{{ route('profile/update') }}">
                         @csrf
@@ -24,8 +32,12 @@
 
                         </div>
                         <div class="col-md-6">
-                            Gender  <input  type="text" class="form-control" name="gender">
-
+                            Gender  <input id="gender"  type="text" class="form-control" name="gender" @error('gender') is-invalid @enderror">
+                            @error('gender')
+                            <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
                         <div class="col-md-6">
                             Email notification  <input type="checkbox"  name="email_not" checked="">
